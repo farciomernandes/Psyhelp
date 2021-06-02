@@ -1,46 +1,84 @@
 import { Router } from 'express';
 
-import CreateUserService from '../models/user/services/CreateUserService';
+import CreatePsicologoService from '../models/psicologo/services/CreatePsicologoService';
+import UpdatePsicologoService from '../models/psicologo/services/UpdatePsicologoService';
 
 
-import UsersRepository from "../models/user/repositories/UsersRepository";
-const userRepository = new UsersRepository();
+import  PsicologosRepository from "../models/psicologo/repositories/PsicologosRepository";
+const psicologoRepository = new PsicologosRepository();
 
-const usersRouter = Router();
+const psicologosRouter = Router();
 
-usersRouter.post('/', (request, response)=>{
+psicologosRouter.post('/', (request, response)=>{
    try{ const {
         email,
         password,
         name,
         year,
         uf,
-        sex
+        sex,
+        crp
     } = request.body;
 
 
-   const createUser = new CreateUserService(userRepository);
-    const user = createUser.execute({
+   const createPsicologo = new CreatePsicologoService(psicologoRepository);
+    const psicologo = createPsicologo.execute({
         email,
         password,
         name,
         year,
         uf,
-        sex
+        sex,
+        crp
     })
 
-    return response.json(user);
+    return response.json(psicologo);
     }catch(err){
         return response.status(400).json({ error: err.message})
     }
 })
 
-usersRouter.get('/', (request, response)=>{
-    const users = userRepository.all();
+psicologosRouter.get('/', (request, response)=>{
+    const users = psicologoRepository.all();
 
     return response.json(users);
 })
 
-usersRouter.post('/')
+psicologosRouter.put('/:id', (request, response)=>{
+    const { id } = request.params;
 
-export default usersRouter;
+    const { 
+        email,
+        password,
+        name,
+        year,
+        uf,
+        sex,
+        crp
+     } = request.body;
+
+     const updatePsicologoService = new UpdatePsicologoService(psicologoRepository);
+    try{
+        const psicologo = updatePsicologoService.execute({
+            email,
+            password,
+            name,
+            year,
+            uf,
+            sex,
+            crp,
+            id
+     })
+     
+
+     return response.status(200).json(psicologo)
+
+    }catch(err){
+        return response.status(400).json({ error: err.message})
+    }
+    
+
+     
+})
+
+export default psicologosRouter;

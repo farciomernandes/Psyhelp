@@ -1,27 +1,30 @@
 import { Router } from 'express';
 
-import CreatePsicologoService from '../models/psicologo/services/CreatePsicologoService';
+import CreateUserService from '../models/user/services/CreateUserService';
+import UpdateUserService from '../models/user/services/UpdateUserService';
 
 
-import PsicologosRepository from "../models/psicologo/repositories/PsicologosRepository";
 
-const psicologosRepository = new PsicologosRepository();
+import UsersRepository from "../models/user/repositories/UsersRepository";
 
-const psicologosRouter = Router();
+const usersRepository = new UsersRepository();
 
-psicologosRouter.post('/', (request, response)=>{
-   try{ const {
+const usersRouter = Router();
+
+usersRouter.post('/', (request, response)=>{
+   try{ 
+       const {
         email,
         password,
         name,
         year,
         uf,
         sex,
-        crp
+
     } = request.body;
 
 
-   const createUser = new CreatePsicologoService(psicologosRepository);
+   const createUser = new CreateUserService(usersRepository);
     const user = createUser.execute({
         email,
         password,
@@ -29,7 +32,6 @@ psicologosRouter.post('/', (request, response)=>{
         year,
         uf,
         sex,
-        crp
     })
 
     return response.json(user);
@@ -38,12 +40,49 @@ psicologosRouter.post('/', (request, response)=>{
     }
 })
 
-psicologosRouter.get('/', (request, response)=>{
-    const users = psicologosRepository.all();
+usersRouter.get('/', (request, response)=>{
+    const users = usersRepository.all();
 
     return response.json(users);
 })
 
-psicologosRouter.post('/')
+usersRouter.post('/')
 
-export default psicologosRouter;
+usersRouter.put('/:id', (request, response)=>{
+    const { id } = request.params;
+
+    const { 
+        email,
+        password,
+        name,
+        year,
+        uf,
+        sex,
+        crp
+     } = request.body;
+
+     const updateUserService = new UpdateUserService(usersRepository);
+    try{
+        const psicologo = updateUserService.execute({
+            email,
+            password,
+            name,
+            year,
+            uf,
+            sex,
+            id
+     })
+     
+
+     return response.status(200).json(psicologo)
+
+    }catch(err){
+        return response.status(400).json({ error: err.message})
+    }
+    
+
+     
+})
+
+
+export default usersRouter;

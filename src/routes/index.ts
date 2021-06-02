@@ -4,7 +4,7 @@ import psicologosRouter from './psicologos.routes';
 
 const routes = Router();
 
-routes.use('/users', usersRouter);
+routes.use('/user', usersRouter);
 routes.use('/psicologo', psicologosRouter);
 
 

@@ -1,5 +1,6 @@
 import User from '../models/User';
 import ICreateUserDTO from '../interfaces/ICreateUserDTO';
+import IUpdateUserDTO from '../interfaces/IUpdateUserDTO';
 
 export default class UsersRepository{
     private users: User[];
@@ -14,6 +15,15 @@ export default class UsersRepository{
         
         return checkEmail || null;
     }
+
+    public findById(id: string): number{
+        
+        const checkUser = this.users.findIndex(user => user.id == id);
+
+        return checkUser;
+    }
+
+
 
 
     public create({email, password, name, uf, year, sex}: ICreateUserDTO): User{
@@ -31,6 +41,23 @@ export default class UsersRepository{
         this.users.push(user);
     
         return user;
+    }
+
+    public update({email, password, name, uf, year, sex, id}: IUpdateUserDTO, position: number): User{
+        
+        const newUser = {
+            email,
+            password,
+            name,
+            uf,
+            year,
+            sex,
+            id,
+        }
+
+        this.users[position] = newUser;
+
+        return newUser;
     }
 
     public all(): User[]{
