@@ -1,32 +1,35 @@
 import { Router } from 'express';
 
-import CreateUserService from '../models/user/services/CreateUserService';
+import CreatePsicologoService from '../models/psicologo/services/CreatePsicologoService';
 
 
-import UsersRepository from "../models/user/repositories/UsersRepository";
-const userRepository = new UsersRepository();
+import PsicologosRepository from "../models/psicologo/repositories/PsicologosRepository";
 
-const usersRouter = Router();
+const psicologosRepository = new PsicologosRepository();
 
-usersRouter.post('/', (request, response)=>{
+const psicologosRouter = Router();
+
+psicologosRouter.post('/', (request, response)=>{
    try{ const {
         email,
         password,
         name,
         year,
         uf,
-        sex
+        sex,
+        crp
     } = request.body;
 
 
-   const createUser = new CreateUserService(userRepository);
+   const createUser = new CreatePsicologoService(psicologosRepository);
     const user = createUser.execute({
         email,
         password,
         name,
         year,
         uf,
-        sex
+        sex,
+        crp
     })
 
     return response.json(user);
@@ -35,12 +38,12 @@ usersRouter.post('/', (request, response)=>{
     }
 })
 
-usersRouter.get('/', (request, response)=>{
-    const users = userRepository.all();
+psicologosRouter.get('/', (request, response)=>{
+    const users = psicologosRepository.all();
 
     return response.json(users);
 })
 
-usersRouter.post('/')
+psicologosRouter.post('/')
 
-export default usersRouter;
+export default psicologosRouter;
