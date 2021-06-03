@@ -6,4 +6,8 @@ export default interface ICreatePsicologoDTO {
     year: number;
     sex: string;
     crp: string;
+    phone: number;
+    city: string;
+    description: string;
+    speciality: string;
 }

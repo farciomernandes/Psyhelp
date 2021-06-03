@@ -13,7 +13,8 @@ class UpdatePsicologoDTO{
         this.psicologoRepository = psicologoRepository;
     }
 
-    public execute({email, password, name, year, sex, uf, crp, id }: IUpdatePsicologoDTO): Psicologo{
+    public execute({email, password, name, year, sex, uf, crp, id, phone, city, description, 
+        speciality }: IUpdatePsicologoDTO): Psicologo{
         const findIdForId = this.psicologoRepository.findById(id);
         
         if(findIdForId < 0){
@@ -29,6 +30,10 @@ class UpdatePsicologoDTO{
             sex,
             crp,
             id,
+            phone,
+            city,
+            description, 
+            speciality
         },
         findIdForId
         )

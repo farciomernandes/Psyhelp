@@ -13,7 +13,7 @@ class CreatePostService{
         this.authorRepository = psicologoRepository;
     }
 
-    public execute({ idAuthor, category, text, title, crp }: ICreatePostDTO): Post{
+    public execute({ idAuthor, category, text, title, crp, approved }: ICreatePostDTO): Post{
 
 
         const newPost = this.authorRepository.create({   
@@ -22,6 +22,7 @@ class CreatePostService{
             text, 
             title, 
             crp,
+            approved
         })
 
         return newPost;

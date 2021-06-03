@@ -26,7 +26,8 @@ export default class PsicologosRepository{
     }
 
 
-    public create({email, password, name, uf, year, sex, crp}: ICreatePsicologoDTO): Psicologo{
+    public create({email, password, name, uf, year, sex, crp, phone, city, description, 
+        speciality }: ICreatePsicologoDTO): Psicologo{
         
         const psicologo = new Psicologo({
             name,
@@ -35,7 +36,11 @@ export default class PsicologosRepository{
             year,
             uf,
             sex,
-            crp
+            crp,
+            phone,
+            city,
+            description, 
+            speciality
         })
 
        
@@ -45,7 +50,8 @@ export default class PsicologosRepository{
     }
 
 
-    public update({email, password, name, uf, year, sex, crp, id}: IUpdatePsicologoDTO, position: number): Psicologo{
+    public update({email, password, name, uf, year, sex, crp, id, phone, city, description, 
+        speciality }: IUpdatePsicologoDTO, position: number): Psicologo{
         
         const newPsicologo = {
             email,
@@ -55,7 +61,11 @@ export default class PsicologosRepository{
             year,
             sex,
             id,
-            crp
+            crp,
+            phone,
+            city,
+            description, 
+            speciality
         }
 
         this.psicologos[position] = newPsicologo;

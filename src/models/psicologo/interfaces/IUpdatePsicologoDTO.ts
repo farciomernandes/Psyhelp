@@ -7,4 +7,8 @@ export default interface IUpdatePsicologoDTO {
     sex: string;
     crp: string;
     id: string;
+    phone: number;
+    city: string;
+    description: string;
+    speciality: string;
 }

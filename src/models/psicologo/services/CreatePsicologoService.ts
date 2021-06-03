@@ -13,7 +13,8 @@ class CreateUserService{
         this.psicologoRepository = psicologoRepository;
     }
 
-    public execute({email, password, name, year, sex, uf, crp }: ICreatePsicologoDTO): Psicologo{
+    public execute({email, password, name, year, sex, uf, crp, phone, city, description, 
+        speciality }: ICreatePsicologoDTO): Psicologo{
         const findEmailForEmail = this.psicologoRepository.findByEmail(email);
         if(findEmailForEmail){
             throw new Error("Email adress already used!")
@@ -26,7 +27,11 @@ class CreateUserService{
             year,
             uf,
             sex,
-            crp
+            crp,
+            phone,
+            city,
+            description, 
+            speciality
         })
 
         return newUser;

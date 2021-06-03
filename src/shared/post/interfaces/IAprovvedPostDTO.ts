@@ -1,5 +1,6 @@
-export default interface ICreatePostDTO {
+export default interface IAprovvedPostDTO {
     idAuthor: string;
+    id: string;
     title: string;
     text: string;
     category: string;

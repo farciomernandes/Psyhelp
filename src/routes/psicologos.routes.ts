@@ -17,7 +17,11 @@ psicologosRouter.post('/', (request, response)=>{
         year,
         uf,
         sex,
-        crp
+        crp,
+        phone,
+        city,
+        description, 
+        speciality
     } = request.body;
 
 
@@ -29,7 +33,11 @@ psicologosRouter.post('/', (request, response)=>{
         year,
         uf,
         sex,
-        crp
+        crp,
+        phone,
+        city,
+        description, 
+        speciality
     })
 
     return response.json(psicologo);
@@ -54,7 +62,11 @@ psicologosRouter.put('/:id', (request, response)=>{
         year,
         uf,
         sex,
-        crp
+        crp,
+        phone,
+        city,
+        description, 
+        speciality
      } = request.body;
 
      const updatePsicologoService = new UpdatePsicologoService(psicologoRepository);
@@ -67,7 +79,11 @@ psicologosRouter.put('/:id', (request, response)=>{
             uf,
             sex,
             crp,
-            id
+            id,
+            phone,
+            city,
+            description, 
+            speciality
      })
      
 
