@@ -4,6 +4,6 @@ export default interface IAprovvedPostDTO {
     title: string;
     text: string;
     category: string;
-    crp?: string;
+    crp: string;
     approved: boolean;
 }

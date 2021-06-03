@@ -14,11 +14,12 @@ export default class PostsRepository{
         this.posts = [];
     }
 
-    public findById(id: string): number | null{
+    public findById(id: string): number{
         
         const checkPost = this.posts.findIndex(post => post.id == id);
+
         
-        return checkPost || null;
+        return checkPost;
     }
 
     public findByCategory(category: string): Post[] | null{

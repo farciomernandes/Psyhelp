@@ -8,7 +8,7 @@ import IAprovvedPostDTO from '../interfaces/IAprovvedPostDTO';
 
 
 class AprovvedPostService{
-    private postsRepository: PostsRepository ;
+    private postsRepository: PostsRepository;
     constructor(postsRepository: PostsRepository){
         this.postsRepository = postsRepository;
     }
@@ -24,10 +24,10 @@ class AprovvedPostService{
     }: IAprovvedPostDTO): Post{
         const findIdForId = this.postsRepository.findById(id);
         
-        if(!findIdForId){
+        if(findIdForId < 0){
             throw new Error("Id is not found!")
         }
-    
+
         const aprovvedPost= this.postsRepository.toApprovePost({   
             id,
             approved,

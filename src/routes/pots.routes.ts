@@ -7,8 +7,10 @@ import DeletePostService from '../shared/post/services/DeletePostService';
 
 
 import PostsRepository from "../shared/post/repositories/PostsRepository";
+import PsicologosRepository from '../models/psicologo/repositories/PsicologosRepository'
 
 const postsRepository = new PostsRepository();
+const psicologosRepository = new PsicologosRepository();
 
 const postsRouter = Router();
 
@@ -51,15 +53,15 @@ postsRouter.put('/:idAuthor', (request, response)=>{
          title, 
          crp,
          id,
-         approved
-
      } = request.body;
+
+     const approved = true;
  
      const { idAuthor } = request.params;
   
     const aprovvedPost = new AprovvedPostService(postsRepository);
      
-    const user = aprovvedPost.execute({
+    const aprovved = aprovvedPost.execute({
          approved,
          category,
          id,
@@ -69,7 +71,7 @@ postsRouter.put('/:idAuthor', (request, response)=>{
          crp
      })
  
-     return response.json(user);
+     return response.json(aprovved);
      }catch(err){
          return response.status(400).json({ error: err.message})
      }
@@ -89,7 +91,7 @@ postsRouter.delete('/:idAuthor', (request, response)=>{
          idAuthor,
      })
  
-     return response.status(200);
+     return response.status(200).json({ message: "Post is deleted!"});
      }catch(err){
          return response.status(400).json({ error: err.message})
      }

@@ -1,5 +1,3 @@
-import Post from '../models/Post';
-
 import PostsRepository from '../repositories/PostsRepository';
 
 
@@ -19,7 +17,7 @@ class DeletePostService{
     public execute({idAuthor, idPost }: IRequestDelete): boolean{
         const findIdForId = this.postsRepository.findById(idPost);
         
-        if(!findIdForId){
+        if(findIdForId < 0){
             throw new Error("Id is not found!")
         }
 

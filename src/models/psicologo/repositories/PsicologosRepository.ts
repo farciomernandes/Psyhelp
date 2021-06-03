@@ -26,6 +26,19 @@ export default class PsicologosRepository{
     }
 
 
+    public findByCrp(crp: string): number{
+        console.log("AQUI DENTRO: ", this.psicologos)
+
+        
+        const checkUser = this.psicologos.findIndex(user => user.crp == crp);
+
+        console.log("RESULTADO: ", checkUser);
+
+        return checkUser;
+    }
+
+
+
     public create({email, password, name, uf, year, sex, crp, phone, city, description, 
         speciality }: ICreatePsicologoDTO): Psicologo{
         
