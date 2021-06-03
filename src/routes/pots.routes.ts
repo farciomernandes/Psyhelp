@@ -2,6 +2,8 @@ import { Router } from 'express';
 
 import CreatePostService from '../shared/post/services/CreatePostService';
 import AprovvedPostService from '../shared/post/services/AprovvedPostService';
+import DeletePostService from '../shared/post/services/DeletePostService';
+
 
 
 import PostsRepository from "../shared/post/repositories/PostsRepository";
@@ -48,14 +50,13 @@ postsRouter.put('/:idAuthor', (request, response)=>{
          text, 
          title, 
          crp,
-         id
+         id,
+         approved
 
      } = request.body;
  
      const { idAuthor } = request.params;
- 
-     const approved = false;
- 
+  
     const aprovvedPost = new AprovvedPostService(postsRepository);
      
     const user = aprovvedPost.execute({
@@ -72,10 +73,44 @@ postsRouter.put('/:idAuthor', (request, response)=>{
      }catch(err){
          return response.status(400).json({ error: err.message})
      }
- })
+})
+
+
+postsRouter.delete('/:idAuthor', (request, response)=>{
+    try{ 
+        const { id } = request.body;
+ 
+     const { idAuthor } = request.params;
+ 
+    const deletePost = new DeletePostService(postsRepository);
+     
+    deletePost.execute({
+         idPost: id,
+         idAuthor,
+     })
+ 
+     return response.status(200);
+     }catch(err){
+         return response.status(400).json({ error: err.message})
+     }
+})
 
 postsRouter.get('/', (request, response)=>{
     const pots = postsRepository.all();
+
+    return response.json(pots);
+})
+
+
+postsRouter.get('/aprovved', (request, response)=>{
+    const pots = postsRepository.findAprovedd();
+
+    return response.json(pots);
+})
+
+
+postsRouter.get('/notaprovved', (request, response)=>{
+    const pots = postsRepository.findNotAprovedd();
 
     return response.json(pots);
 })
