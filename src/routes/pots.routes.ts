@@ -7,10 +7,8 @@ import DeletePostService from '../shared/post/services/DeletePostService';
 
 
 import PostsRepository from "../shared/post/repositories/PostsRepository";
-import PsicologosRepository from '../models/psicologo/repositories/PsicologosRepository'
 
 const postsRepository = new PostsRepository();
-const psicologosRepository = new PsicologosRepository();
 
 const postsRouter = Router();
 
