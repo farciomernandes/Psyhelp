@@ -37,33 +37,31 @@ usersRouter.post('/', async(request, response)=>{
     }catch(err){
         return response.status(400).json({ error: err.message})
     }
-})
+}) //Is working
 
-usersRouter.get('/', (request, response)=>{
+usersRouter.get('/', async(request, response)=>{
     const usersRepository = getCustomRepository(UsersRepository);
 
-    const users = usersRepository.find();
+    const users = await usersRepository.find();
+    
 
     return response.json(users);
-})
-
-usersRouter.post('/')
+}) //Is working
 
 usersRouter.put('/:id', async(request, response)=>{
     const { id } = request.params;
-
     const { 
         email,
         password,
         name,
         year,
         uf,
-        sex,
-        crp
+        sex
      } = request.body;
 
      const updateUserService = new UpdateUserService();
     try{
+
         const psicologo = await updateUserService.execute({
             email,
             password,
@@ -73,8 +71,6 @@ usersRouter.put('/:id', async(request, response)=>{
             sex,
             id
      })
-     
-
      return response.status(200).json(psicologo)
 
     }catch(err){
