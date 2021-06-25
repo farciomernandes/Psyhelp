@@ -4,8 +4,6 @@ import { getCustomRepository } from 'typeorm';
 import CreateUserService from '../modules/user/services/CreateUserService';
 import UpdateUserService from '../modules/user/services/UpdateUserService';
 
-
-
 import UsersRepository from "../modules/user/typeorm/repositories/UsersRepository";
 
 const usersRouter = Router();
@@ -79,7 +77,7 @@ usersRouter.put('/:id', async(request, response)=>{
     
 
      
-})
+}) //Is working
 
 
 export default usersRouter;

@@ -1,26 +1,25 @@
-import Psicologo from '../models/Psicologo';
+import { getCustomRepository } from 'typeorm';
 
-import PsicologosRepository from '../repositories/PsicologosRepository';
-
+import Psicologo from '../typeorm/models/Psicologo';
+import PsicologosRepository from '../typeorm/repositories/PsicologosRepository';
 import ICreatePsicologoDTO from '../interfaces/ICreatePsicologoDTO';
 
 
 
 
 class CreateUserService{
-    private psicologoRepository: PsicologosRepository ;
-    constructor(psicologoRepository: PsicologosRepository){
-        this.psicologoRepository = psicologoRepository;
-    }
-
-    public execute({email, password, name, year, sex, uf, crp, phone, city, description, 
-        speciality }: ICreatePsicologoDTO): Psicologo{
-        const findEmailForEmail = this.psicologoRepository.findByEmail(email);
+    public async execute({email, password, name, year, sex, uf, crp, phone, city, description, 
+        speciality }: ICreatePsicologoDTO): Promise<Psicologo>{
+        
+        const psicologoRepository = getCustomRepository(PsicologosRepository);
+    
+        const findEmailForEmail = await psicologoRepository.findByEmail(email);
+        
         if(findEmailForEmail){
             throw new Error("Email adress already used!")
         }
     
-        const newUser = this.psicologoRepository.create({   
+        const newUser = psicologoRepository.create({   
             email,
             password,
             name,
@@ -32,7 +31,9 @@ class CreateUserService{
             city,
             description, 
             speciality
-        })
+        });
+
+        await psicologoRepository.save(newUser);
 
         return newUser;
     }

@@ -1,16 +1,17 @@
 import { Router } from 'express';
+import { getCustomRepository } from 'typeorm';
 
 import CreatePsicologoService from '../modules/psicologo/services/CreatePsicologoService';
 import UpdatePsicologoService from '../modules/psicologo/services/UpdatePsicologoService';
 
 
-import  PsicologosRepository from "../modules/psicologo/repositories/PsicologosRepository";
-const psicologoRepository = new PsicologosRepository();
+import  PsicologosRepository from "../modules/psicologo/typeorm/repositories/PsicologosRepository";
 
 const psicologosRouter = Router();
 
-psicologosRouter.post('/', (request, response)=>{
-   try{ const {
+psicologosRouter.post('/', async(request, response)=>{
+   try{ 
+       const {
         email,
         password,
         name,
@@ -25,8 +26,8 @@ psicologosRouter.post('/', (request, response)=>{
     } = request.body;
 
 
-   const createPsicologo = new CreatePsicologoService(psicologoRepository);
-    const psicologo = createPsicologo.execute({
+   const createPsicologo = new CreatePsicologoService();
+    const psicologo = await createPsicologo.execute({
         email,
         password,
         name,
@@ -46,8 +47,9 @@ psicologosRouter.post('/', (request, response)=>{
     }
 })
 
-psicologosRouter.get('/', (request, response)=>{
-    const users = psicologoRepository.all();
+psicologosRouter.get('/', async(request, response)=>{
+    const psicologoRepository = getCustomRepository(PsicologosRepository);
+    const users = await psicologoRepository.find();
 
     return response.json(users);
 })
@@ -69,7 +71,7 @@ psicologosRouter.put('/:id', (request, response)=>{
         speciality
      } = request.body;
 
-     const updatePsicologoService = new UpdatePsicologoService(psicologoRepository);
+     const updatePsicologoService = new UpdatePsicologoService();
     try{
         const psicologo = updatePsicologoService.execute({
             email,

@@ -25,21 +25,6 @@ class UsersRepository extends Repository<User>{
         return findUser || null;
     }
 
-   /* public update({email, password, name, uf, year, sex, id}: IUpdateUserDTO, position: number): User{
-        const newUser = {
-            email,
-            password,
-            name,
-            uf,
-            year,
-            sex,
-            id,
-        }
-        this.users[position] = newUser;
-        return newUser;
-    } */
-
-    
 }
 
 export default UsersRepository;
