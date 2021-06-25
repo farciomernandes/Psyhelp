@@ -1,56 +1,61 @@
-import {MigrationInterface, QueryRunner, Table} from "typeorm";
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
 
-export class CreateUser1624464486786 implements MigrationInterface {
-
+export class CreatePost1624641100325 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: "users",
+                name: "posts",
                 columns: [
                     {
                         name: "id",
-                        type: "uuid",
+                        type: "varchar",
                         isPrimary: true,
                         generationStrategy: "uuid",
                         default: 'uuid_generate_v4()',
                     },
                     {
-                        name: "name",
+                        name: "id_author",
+                        type: "uuid",
+                        isNullable: false,
+                    },
+                    {
+                        name: "title",
                         type: "varchar",
                         isNullable: false,
                     },
                     {
-                        name: "email",
+                        name: "text",
                         type: "varchar",
                         isNullable: false,
                     },
                     {
-                        name: "password",
+                        name: "category",
                         type: "varchar",
                         isNullable: false,
                     },
                     {
-                        name: "uf",
-                        type: "varchar",
-                        isNullable: false,
-                    },
-                    {
-                        name: "year",
+                        name: "approved",
                         type: "decimal",
                         isNullable: false,
-                    },
-                    {
-                        name: "sex",
-                        type: "varchar",
-                        isNullable: false,
                     }
+
                 ]
             })
         );
+
+        await queryRunner.createForeignKey("posts", new TableForeignKey({
+            name: "PsicologoPost",
+            columnNames: ["id_author"],
+            referencedColumnNames: ["id"],
+            referencedTableName: "psicologos",
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
+        }));
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("users");
+        await queryRunner.dropForeignKey("posts", "PsicologoPost");
+        await queryRunner.dropTable("posts");
     }
 
 }

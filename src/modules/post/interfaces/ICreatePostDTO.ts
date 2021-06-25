@@ -1,8 +1,6 @@
 export default interface ICreatePostDTO {
-    idAuthor: string;
+    id_author: string;
     title: string;
     text: string;
     category: string;
-    crp?: string;
-    approved: boolean;
 }

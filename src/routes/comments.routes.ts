@@ -1,11 +1,11 @@
 import { Router } from 'express';
 
-import CreateCommentService from '../shared/comment/services/CreateCommentService';
-import DeleteCommentService from '../shared/comment/services/DeleteCommentService';
+import CreateCommentService from '../modules/comment/services/CreateCommentService';
+import DeleteCommentService from '../modules/comment/services/DeleteCommentService';
 
 
 
-import CommentsRepository from "../shared/comment/repositories/CommentsRepository";
+import CommentsRepository from "../modules/comment/repositories/CommentsRepository";
 
 const commentsRepository = new CommentsRepository();
 

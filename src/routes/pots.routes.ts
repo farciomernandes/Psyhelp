@@ -1,39 +1,36 @@
 import { Router } from 'express';
-
-import CreatePostService from '../shared/post/services/CreatePostService';
-import AprovvedPostService from '../shared/post/services/AprovvedPostService';
-import DeletePostService from '../shared/post/services/DeletePostService';
+import { getCustomRepository } from 'typeorm';
 
 
+import CreatePostService from '../modules/post/services/CreatePostService';
+import AprovvedPostService from '../modules/post/services/AprovvedPostService';
+import DeletePostService from '../modules/post/services/DeletePostService';
 
-import PostsRepository from "../shared/post/repositories/PostsRepository";
 
-const postsRepository = new PostsRepository();
+
+import PostsRepository from "../modules/post/repositories/PostsRepository";
+
 
 const postsRouter = Router();
 
-postsRouter.post('/:id', (request, response)=>{
+postsRouter.post('/:id', async(request, response)=>{
    try{ 
        const {
         category, 
         text, 
         title, 
-        crp
     } = request.body;
 
     const { id } = request.params;
 
-    const approved = false;
 
-   const createUser = new CreatePostService(postsRepository);
+   const createUser = new CreatePostService();
     
-   const user = createUser.execute({
-        idAuthor: id, 
+   const user = await createUser.execute({
+        id_author: id, 
         category, 
         text, 
         title, 
-        crp,
-        approved
     })
 
     return response.json(user);
@@ -43,30 +40,21 @@ postsRouter.post('/:id', (request, response)=>{
 })
 
 
-postsRouter.put('/:idAuthor', (request, response)=>{
+postsRouter.put('/:id_psicologo', async(request, response)=>{
     try{ 
         const {
-         category, 
-         text, 
-         title, 
-         crp,
          id,
+         
      } = request.body;
 
-     const approved = true;
  
-     const { idAuthor } = request.params;
+     const { id_psicologo } = request.params;
   
-    const aprovvedPost = new AprovvedPostService(postsRepository);
+    const aprovvedPost = new AprovvedPostService();
      
-    const aprovved = aprovvedPost.execute({
-         approved,
-         category,
+    const aprovved = await aprovvedPost.execute({
          id,
-         idAuthor,
-         text,
-         title,
-         crp
+         id_psicologo,
      })
  
      return response.json(aprovved);
@@ -76,17 +64,17 @@ postsRouter.put('/:idAuthor', (request, response)=>{
 })
 
 
-postsRouter.delete('/:idAuthor', (request, response)=>{
+postsRouter.delete('/:idAuthor', async(request, response)=>{
     try{ 
         const { id } = request.body;
  
      const { idAuthor } = request.params;
  
-    const deletePost = new DeletePostService(postsRepository);
+    const deletePost = new DeletePostService();
      
-    deletePost.execute({
+    await deletePost.execute({
          idPost: id,
-         idAuthor,
+         id_author: idAuthor,
      })
  
      return response.status(200).json({ message: "Post is deleted!"});
@@ -95,26 +83,29 @@ postsRouter.delete('/:idAuthor', (request, response)=>{
      }
 })
 
-postsRouter.get('/', (request, response)=>{
-    const pots = postsRepository.all();
+postsRouter.get('/', async (request, response)=>{
+    const postsRepository = getCustomRepository(PostsRepository);
+    const pots = await postsRepository.find();
 
     return response.json(pots);
 })
 
 
-postsRouter.get('/aprovved', (request, response)=>{
-    const pots = postsRepository.findAprovedd();
+postsRouter.get('/aprovved', async(request, response)=>{
+    const postsRepository = getCustomRepository(PostsRepository);
+    const pots = await postsRepository.findAprovedd();
 
     return response.json(pots);
 })
 
 
-postsRouter.get('/notaprovved', (request, response)=>{
-    const pots = postsRepository.findNotAprovedd();
+postsRouter.get('/notaprovved', async(request, response)=>{
+    const postsRepository = getCustomRepository(PostsRepository);
+
+    const pots = await postsRepository.findNotAprovedd();
 
     return response.json(pots);
 })
 
-postsRouter.post('/')
 
 export default postsRouter;

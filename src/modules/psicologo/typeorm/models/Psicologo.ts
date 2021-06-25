@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn } from 'typeorm';
+import Post from '../../../post/models/Post';
 
 
 @Entity('psicologos')
@@ -39,6 +40,10 @@ class Psicologo {
     
     @Column()
     speciality: string;
+
+    @OneToMany(()=> Post, post=>post.id_author)
+    @JoinColumn({ name: "id"})
+    posts: Post[];
 }
 
 export default Psicologo;

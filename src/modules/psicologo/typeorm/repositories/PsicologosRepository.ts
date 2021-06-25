@@ -17,7 +17,7 @@ class PsicologosRepository extends Repository<Psicologo>{
 
     public async findById(id: string): Promise<Psicologo | null>{
         const checkCrp = await this.findOne({
-            where: {id}
+            where: { id }
         });
 
         return checkCrp || null;
