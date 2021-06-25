@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
-import CreatePsicologoService from '../models/psicologo/services/CreatePsicologoService';
-import UpdatePsicologoService from '../models/psicologo/services/UpdatePsicologoService';
+import CreatePsicologoService from '../modules/psicologo/services/CreatePsicologoService';
+import UpdatePsicologoService from '../modules/psicologo/services/UpdatePsicologoService';
 
 
-import  PsicologosRepository from "../models/psicologo/repositories/PsicologosRepository";
+import  PsicologosRepository from "../modules/psicologo/repositories/PsicologosRepository";
 const psicologoRepository = new PsicologosRepository();
 
 const psicologosRouter = Router();

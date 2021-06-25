@@ -1,17 +1,16 @@
 import { Router } from 'express';
+import { getCustomRepository } from 'typeorm';
 
-import CreateUserService from '../models/user/services/CreateUserService';
-import UpdateUserService from '../models/user/services/UpdateUserService';
+import CreateUserService from '../modules/user/services/CreateUserService';
+import UpdateUserService from '../modules/user/services/UpdateUserService';
 
 
 
-import UsersRepository from "../models/user/repositories/UsersRepository";
-
-const usersRepository = new UsersRepository();
+import UsersRepository from "../modules/user/typeorm/repositories/UsersRepository";
 
 const usersRouter = Router();
 
-usersRouter.post('/', (request, response)=>{
+usersRouter.post('/', async(request, response)=>{
    try{ 
        const {
         email,
@@ -24,8 +23,8 @@ usersRouter.post('/', (request, response)=>{
     } = request.body;
 
 
-   const createUser = new CreateUserService(usersRepository);
-    const user = createUser.execute({
+   const createUser = new CreateUserService();
+    const user = await createUser.execute({
         email,
         password,
         name,
@@ -41,14 +40,16 @@ usersRouter.post('/', (request, response)=>{
 })
 
 usersRouter.get('/', (request, response)=>{
-    const users = usersRepository.all();
+    const usersRepository = getCustomRepository(UsersRepository);
+
+    const users = usersRepository.find();
 
     return response.json(users);
 })
 
 usersRouter.post('/')
 
-usersRouter.put('/:id', (request, response)=>{
+usersRouter.put('/:id', async(request, response)=>{
     const { id } = request.params;
 
     const { 
@@ -61,9 +62,9 @@ usersRouter.put('/:id', (request, response)=>{
         crp
      } = request.body;
 
-     const updateUserService = new UpdateUserService(usersRepository);
+     const updateUserService = new UpdateUserService();
     try{
-        const psicologo = updateUserService.execute({
+        const psicologo = await updateUserService.execute({
             email,
             password,
             name,
