@@ -1,8 +1,8 @@
 import { getCustomRepository } from 'typeorm';
 
-import Post from '../models/Post';
+import Post from '../typeorm/models/Post';
 
-import PostsRepository from '../repositories/PostsRepository';
+import PostsRepository from '../typeorm/repositories/PostsRepository';
 import PsicologosRepository from '../../psicologo/typeorm/repositories/PsicologosRepository';
 
 import IAprovvedPostDTO from '../interfaces/IAprovvedPostDTO';

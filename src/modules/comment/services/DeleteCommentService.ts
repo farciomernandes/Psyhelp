@@ -1,29 +1,21 @@
-import PostsRepository from '../repositories/CommentsRepository';
+import { getCustomRepository } from 'typeorm';
+import ICreateCommentDTO from '../interfaces/ICreateCommentDTO';
 
-
-interface IRequestDelete{
-    idPost: string;
-    idAuthor: string;
-}
-
+import PostsRepository from '../typeorm/repositories/CommentsRepository';
 
 
 class DeletePostService{
-    private postsRepository: PostsRepository ;
-    constructor(postsRepository: PostsRepository){
-        this.postsRepository = postsRepository;
-    }
-
-    public execute({idAuthor, idPost }: IRequestDelete): boolean{
-        const findIdForId = this.postsRepository.findByPost(idPost);
+    public execute({ id_post, id_user }: Omit<ICreateCommentDTO, "text">): boolean{
         
-        if(findIdForId < 0){
-            throw new Error("Id is not found!")
+        const postsRepository = getCustomRepository(PostsRepository);
+        
+        const findIdForId = postsRepository.findByPost(id_post);
+        
+        if(!findIdForId){
+            throw new Error("Post is not found!")
         }
 
-        const deletedPost = this.postsRepository.delete({ idAuthor, idPost }, findIdForId);
 
-        
         return true;
     }
 }

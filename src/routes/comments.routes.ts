@@ -1,50 +1,51 @@
 import { Router } from 'express';
+import { getCustomRepository } from 'typeorm';
 
 import CreateCommentService from '../modules/comment/services/CreateCommentService';
 import DeleteCommentService from '../modules/comment/services/DeleteCommentService';
 
 
 
-import CommentsRepository from "../modules/comment/repositories/CommentsRepository";
+import CommentsRepository from "../modules/comment/typeorm/repositories/CommentsRepository";
 
-const commentsRepository = new CommentsRepository();
 
 const commentsRouter = Router();
 
-commentsRouter.post('/:idUser', (request, response)=>{
+commentsRouter.post('/:id_user', async(request, response)=>{
    try{ 
        const {
-        idPost,
+        id_post,
         text
     } = request.body;
 
-    const { idUser } = request.params;
+    const { id_user } = request.params;
 
-   const createComment = new CreateCommentService(commentsRepository);
+   const createComment = new CreateCommentService();
     
-   const comment = createComment.execute({
-        idPost,
-        idUser,
+   const comment = await createComment.execute({
+        id_post,
+        id_user,
         text
     })
 
     return response.json(comment);
+    
     }catch(err){
         return response.status(400).json({ error: err.message})
     }
 })
 
-commentsRouter.delete('/:idAuthor', (request, response)=>{
+commentsRouter.delete('/:id_user', (request, response)=>{
     try{ 
         const { id } = request.body;
  
-     const { idAuthor } = request.params;
+     const { id_user } = request.params;
  
-    const deletePost = new DeleteCommentService(commentsRepository);
+    const deletePost = new DeleteCommentService();
      
     deletePost.execute({
-         idPost: id,
-         idAuthor,
+         id_post: id,
+         id_user,
      })
  
      return response.status(200).json({ message: "Comment is deleted!"});
@@ -53,8 +54,9 @@ commentsRouter.delete('/:idAuthor', (request, response)=>{
      }
 })
 
-commentsRouter.get('/', (request, response)=>{
-    const comments = commentsRepository.all();
+commentsRouter.get('/', async(request, response)=>{
+    const commentsRepository = getCustomRepository(CommentsRepository);
+    const comments = await commentsRepository.find();
 
     return response.json(comments);
 })

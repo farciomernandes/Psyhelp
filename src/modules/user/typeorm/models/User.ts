@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn } from 'typeorm';
 
+import Comment from '../../../comment/typeorm/models/Comment';
 
 @Entity('users')
 class User {
@@ -23,6 +24,10 @@ class User {
     
     @Column()
     sex: string;
+
+    @OneToMany(()=> Comment, comment=>comment.id_user)
+    @JoinColumn( { name: "id" } )
+    comments: Comment[]
 
     // O contructor da classe é criado automaticamente pelo typeorm
 }

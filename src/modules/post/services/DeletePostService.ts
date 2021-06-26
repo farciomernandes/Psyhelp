@@ -1,7 +1,7 @@
 import { getCustomRepository } from 'typeorm';
 
 import PsicologosRepository from '../../psicologo/typeorm/repositories/PsicologosRepository';
-import PostsRepository from '../repositories/PostsRepository';
+import PostsRepository from '../typeorm/repositories/PostsRepository';
 
 
 interface IRequestDelete{

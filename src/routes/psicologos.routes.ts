@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { getCustomRepository } from 'typeorm';
+import PostsRepository from '../modules/post/typeorm/repositories/PostsRepository';
 
 import CreatePsicologoService from '../modules/psicologo/services/CreatePsicologoService';
 import UpdatePsicologoService from '../modules/psicologo/services/UpdatePsicologoService';
@@ -53,6 +54,29 @@ psicologosRouter.get('/', async(request, response)=>{
 
     return response.json(users);
 })
+
+
+/*
+    BUSCA TODOS OS POSTS DE UM USUARIO PSICOLOGO
+psicologosRouter.get('/:id', async(request, response)=>{
+
+    const { id } = request.params;
+    const psicologoRepository = getCustomRepository(PsicologosRepository);
+    const postsRepository = getCustomRepository(PostsRepository);
+    const users = await psicologoRepository.findOne({
+        where: { id }
+    });
+
+    const posts = await postsRepository.find({
+        where: { id_author: id }
+    })
+
+    return response.json({
+        user: users,
+        posts: posts
+    });
+}) */
+
 
 psicologosRouter.put('/:id', (request, response)=>{
     const { id } = request.params;

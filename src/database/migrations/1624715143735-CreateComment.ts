@@ -1,10 +1,11 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
 
-export class CreatePost1624641100325 implements MigrationInterface {
+export class CreateComment1624715143735 implements MigrationInterface {
+
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: "posts",
+                name: "comments",
                 columns: [
                     {
                         name: "id",
@@ -14,48 +15,47 @@ export class CreatePost1624641100325 implements MigrationInterface {
                         default: 'uuid_generate_v4()',
                     },
                     {
-                        name: "id_author",
+                        name: "id_user",
                         type: "uuid",
                         isNullable: false,
                     },
                     {
-                        name: "title",
-                        type: "varchar",
+                        name: "id_post",
+                        type: "uuid",
                         isNullable: false,
                     },
                     {
                         name: "text",
                         type: "varchar",
                         isNullable: false,
-                    },
-                    {
-                        name: "category",
-                        type: "varchar",
-                        isNullable: false,
-                    },
-                    {
-                        name: "approved",
-                        type: "decimal",
-                        isNullable: false,
                     }
-
                 ]
             })
         );
 
-        await queryRunner.createForeignKey("posts", new TableForeignKey({
-            name: "PsicologoPost",
-            columnNames: ["id_author"],
+        await queryRunner.createForeignKey("comments", new TableForeignKey({
+            name: "CommentUser",
+            columnNames: ["id_user"],
             referencedColumnNames: ["id"],
-            referencedTableName: "psicologos",
+            referencedTableName: "users",
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
+        }));
+
+        await queryRunner.createForeignKey("comments", new TableForeignKey({
+            name: "CommentPost",
+            columnNames: ["id_post"],
+            referencedColumnNames: ["id"],
+            referencedTableName: "posts",
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
         }));
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropForeignKey("posts", "PsicologoPost");
-        await queryRunner.dropTable("posts");
+        await queryRunner.dropForeignKey("comments", "CommentUser");
+        await queryRunner.dropForeignKey("comments", "CommentPost");
+        await queryRunner.dropTable("comments");
     }
 
 }

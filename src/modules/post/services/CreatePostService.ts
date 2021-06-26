@@ -1,9 +1,9 @@
 import { getCustomRepository } from 'typeorm';
 
-import Post from '../models/Post';
+import Post from '../typeorm/models/Post';
 
 import ICreatePostDTO from '../interfaces/ICreatePostDTO';
-import PostsRepository from '../repositories/PostsRepository';
+import PostsRepository from '../typeorm/repositories/PostsRepository';
 
 
 

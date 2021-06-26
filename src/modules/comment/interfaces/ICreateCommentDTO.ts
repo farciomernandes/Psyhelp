@@ -1,5 +1,5 @@
 export default interface ICreateCommentDTO {
-    idUser: string;
-    idPost: string;
+    id_user: string;
+    id_post: string;
     text: string;
 }

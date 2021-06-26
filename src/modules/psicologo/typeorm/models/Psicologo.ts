@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn } from 'typeorm';
-import Post from '../../../post/models/Post';
+import Post from '../../../post/typeorm/models/Post';
 
 
 @Entity('psicologos')

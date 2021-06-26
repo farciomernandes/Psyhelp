@@ -8,7 +8,7 @@ import DeletePostService from '../modules/post/services/DeletePostService';
 
 
 
-import PostsRepository from "../modules/post/repositories/PostsRepository";
+import PostsRepository from "../modules/post/typeorm/repositories/PostsRepository";
 
 
 const postsRouter = Router();

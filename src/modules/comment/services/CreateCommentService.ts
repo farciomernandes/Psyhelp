@@ -1,26 +1,22 @@
-import Comment from '../models/Comment';
-
-import CommentsRepository from '../repositories/CommentsRepository';
-
+import { getCustomRepository } from 'typeorm';
 import ICreateCommentDTO from '../interfaces/ICreateCommentDTO';
 
-
-
+import Comment from '../typeorm/models/Comment';
+import CommentsRepository from '../typeorm/repositories/CommentsRepository';
 
 class CreateCommentService{
-    private commentRepository: CommentsRepository ;
-    constructor(psicologoRepository: CommentsRepository){
-        this.commentRepository = psicologoRepository;
-    }
 
-    public execute({ idUser, idPost, text }: ICreateCommentDTO): Omit<Comment, "id">{
+    public async execute({ id_user, id_post, text }: ICreateCommentDTO): Promise<Comment>{
+        const commentRepository = getCustomRepository(CommentsRepository);
 
-
-        const newPost = this.commentRepository.create({   
-            idUser, 
-            idPost, 
+       
+        const newPost = commentRepository.create({
+            id_post,
+            id_user,
             text
         })
+
+        await commentRepository.save(newPost);
 
         return newPost;
     }
