@@ -2,8 +2,6 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn, ManyToOn
 
 import Psicologo from '../../../psicologo/typeorm/models/Psicologo';
 
-import Comment from '../../../comment/typeorm/models/Comment';
-
 @Entity('posts')
 class Post {
 
@@ -30,10 +28,6 @@ class Post {
 
     @Column()
     approved: number;
-
-    @OneToMany(()=> Comment, comment=>comment.id_post)
-    @JoinColumn( { name: "id" } )
-    comments: Comment[]
 
 }
 
