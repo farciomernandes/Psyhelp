@@ -14,7 +14,6 @@ sessionsRouter.post('/', async(request, response)=>{
         password
     } = request.body;
 
-    console.log('CHEGOU AQUI')
 
    const authenticateService = new AuthenticateService();
     

@@ -85,9 +85,9 @@ postsRouter.delete('/:idAuthor', async(request, response)=>{
 
 postsRouter.get('/', async (request, response)=>{
     const postsRepository = getCustomRepository(PostsRepository);
-    const pots = await postsRepository.find();
+    const posts = await postsRepository.find();
 
-    return response.json(pots);
+    return response.json(posts);
 })
 
 
@@ -99,10 +99,12 @@ postsRouter.get('/aprovved', async(request, response)=>{
 })
 
 
-postsRouter.get('/notaprovved', async(request, response)=>{
+postsRouter.get('/:category', async(request, response)=>{
     const postsRepository = getCustomRepository(PostsRepository);
-
-    const pots = await postsRepository.findNotAprovedd();
+    const { category } = request.params;
+    const pots = await postsRepository.find({
+        where: { category }
+    });
 
     return response.json(pots);
 })
