@@ -14,7 +14,7 @@ class UpdatePsicologoDTO{
         
         const psicologoRepository = getCustomRepository(PsicologosRepository);
         
-        const findIdForId = psicologoRepository.findByEmail(email);
+        const findIdForId = await psicologoRepository.findByEmail(email);
         
         if(!findIdForId){
             throw new Error("Id is not found!")

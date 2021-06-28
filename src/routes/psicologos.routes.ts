@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getCustomRepository } from 'typeorm';
-import PostsRepository from '../modules/post/typeorm/repositories/PostsRepository';
+import DeletePsicologoService from '../modules/psicologo/services/DeletePsicologoService';
 
 import CreatePsicologoService from '../modules/psicologo/services/CreatePsicologoService';
 import UpdatePsicologoService from '../modules/psicologo/services/UpdatePsicologoService';
@@ -122,5 +122,24 @@ psicologosRouter.put('/:id', (request, response)=>{
 
      
 })
+
+
+psicologosRouter.delete('/:id', async(request, response)=>{
+    const { id } = request.params;
+
+
+     const deletePsicologoService = new DeletePsicologoService();
+    try{
+
+        const psicologo = await deletePsicologoService.execute(id);
+     return response.status(200).json(psicologo)
+
+    }catch(err){
+        return response.status(400).json({ error: err.message})
+    }
+    
+
+     
+}) //Is working
 
 export default psicologosRouter;
