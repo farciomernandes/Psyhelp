@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { getCustomRepository } from 'typeorm';
 
 import CreateUserService from '../modules/user/services/CreateUserService';
+import DeleteUserService from '../modules/user/services/DeleteUserService';
 import UpdateUserService from '../modules/user/services/UpdateUserService';
 
 import UsersRepository from "../modules/user/typeorm/repositories/UsersRepository";
@@ -79,5 +80,23 @@ usersRouter.put('/:id', async(request, response)=>{
      
 }) //Is working
 
+
+usersRouter.delete('/:id', async(request, response)=>{
+    const { id } = request.params;
+
+
+     const deleteUserService = new DeleteUserService();
+    try{
+
+        const psicologo = await deleteUserService.execute(id);
+     return response.status(200).json(psicologo)
+
+    }catch(err){
+        return response.status(400).json({ error: err.message})
+    }
+    
+
+     
+}) //Is working
 
 export default usersRouter;
