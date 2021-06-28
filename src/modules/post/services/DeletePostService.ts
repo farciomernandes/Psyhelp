@@ -1,6 +1,6 @@
 import { getCustomRepository } from 'typeorm';
 
-import PsicologosRepository from '../../psicologo/typeorm/repositories/PsicologosRepository';
+
 import PostsRepository from '../typeorm/repositories/PostsRepository';
 
 
@@ -13,22 +13,22 @@ interface IRequestDelete{
 
 class DeletePostService{
 
-    public async execute({id_author, idPost }: IRequestDelete): Promise<boolean>{
+    public async execute({id_author, idPost }: IRequestDelete): Promise<void>{
     const postsRepository = getCustomRepository(PostsRepository);
-    const psicologosRepository = getCustomRepository(PsicologosRepository);
-
 
         const findIdForId = await postsRepository.findById(idPost);
-        const findPsicologo = await psicologosRepository.findById(id_author);
+
         
-        if(!findIdForId || !findPsicologo){
+        if(!findIdForId){
             throw new Error("Id and post is not matching!")
         }
 
-        //const deletedPost = postsRepository.delete({ idAuthor, idPost });
+        if(findIdForId.id_author != id_author){
+            throw new Error("Id and post is not matching!")
+        }
 
-        
-        return true;
+        await postsRepository.delete(findIdForId);
+
     }
 }
 

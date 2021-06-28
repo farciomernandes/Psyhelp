@@ -64,20 +64,20 @@ postsRouter.put('/:id_psicologo', async(request, response)=>{
 })
 
 
-postsRouter.delete('/:idAuthor', async(request, response)=>{
+postsRouter.delete('/:id_author', async(request, response)=>{
     try{ 
         const { id } = request.body;
  
-     const { idAuthor } = request.params;
+     const { id_author } = request.params;
  
     const deletePost = new DeletePostService();
      
-    await deletePost.execute({
+    const deleted = await deletePost.execute({
          idPost: id,
-         id_author: idAuthor,
+         id_author: id_author,
      })
  
-     return response.status(200).json({ message: "Post is deleted!"});
+     return response.status(200).json(deleted);
      }catch(err){
          return response.status(400).json({ error: err.message})
      }
