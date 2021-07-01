@@ -35,7 +35,7 @@ export class CreatePsicologo1624638214634 implements MigrationInterface {
                         isNullable: false,
                     },
                     {
-                        name: "year",
+                        name: "age",
                         type: "decimal",
                         isNullable: false,
                     },

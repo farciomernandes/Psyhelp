@@ -35,7 +35,7 @@ export class CreateUser1624464486786 implements MigrationInterface {
                         isNullable: false,
                     },
                     {
-                        name: "year",
+                        name: "age",
                         type: "decimal",
                         isNullable: false,
                     },

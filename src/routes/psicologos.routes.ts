@@ -127,7 +127,6 @@ psicologosRouter.put('/:id', (request, response)=>{
 psicologosRouter.delete('/:id', async(request, response)=>{
     const { id } = request.params;
 
-
      const deletePsicologoService = new DeletePsicologoService();
     try{
 

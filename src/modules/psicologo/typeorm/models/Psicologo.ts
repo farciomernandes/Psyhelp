@@ -21,7 +21,7 @@ class Psicologo {
     uf: string;
     
     @Column("decimal")
-    year: number;
+    age: number;
 
     @Column()
     sex: string;
@@ -40,10 +40,6 @@ class Psicologo {
     
     @Column()
     speciality: string;
-
-    @OneToMany(()=> Post, post=>post.id_author)
-    @JoinColumn({ name: "id"})
-    posts: Post[];
 }
 
 export default Psicologo;

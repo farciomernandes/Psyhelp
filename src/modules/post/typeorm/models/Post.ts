@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn, ManyToOne } from 'typeorm';
 
 import Psicologo from '../../../psicologo/typeorm/models/Psicologo';
+import User from '../../../user/typeorm/models/User';
 
 @Entity('posts')
 class Post {
@@ -14,14 +15,8 @@ class Post {
     @Column()
     text: string;
 
-
     @Column()
     id_author: string;
-
-
-    @ManyToOne(()=> Psicologo)
-    @JoinColumn({ name: "id_author"})
-    author: Psicologo;
 
     @Column()
     category: string;

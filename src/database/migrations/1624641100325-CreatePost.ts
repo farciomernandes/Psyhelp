@@ -42,19 +42,10 @@ export class CreatePost1624641100325 implements MigrationInterface {
                 ]
             })
         );
-
-        await queryRunner.createForeignKey("posts", new TableForeignKey({
-            name: "PsicologoPost",
-            columnNames: ["id_author"],
-            referencedColumnNames: ["id"],
-            referencedTableName: "psicologos",
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE'
-        }));
+       
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropForeignKey("posts", "PsicologoPost");
         await queryRunner.dropTable("posts");
     }
 

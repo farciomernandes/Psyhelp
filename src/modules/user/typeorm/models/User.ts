@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn } from 'typeorm';
+import Post from '../../../post/typeorm/models/Post';
 
 @Entity('users')
 class User {
@@ -18,7 +19,7 @@ class User {
     uf: string;
 
     @Column("decimal")
-    year: number;
+    age: number;
     
     @Column()
     sex: string;

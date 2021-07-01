@@ -23,7 +23,7 @@ class CreateUserService{
             email,
             password,
             name,
-            year,
+            age: year,
             uf,
             sex,
             crp,

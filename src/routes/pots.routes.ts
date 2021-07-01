@@ -23,7 +23,6 @@ postsRouter.post('/:id', async(request, response)=>{
 
     const { id } = request.params;
 
-
    const createUser = new CreatePostService();
     
    const user = await createUser.execute({
